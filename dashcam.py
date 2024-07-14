@@ -17,7 +17,7 @@ def manage_storage():
     dir_path = 'videos'
     files = sorted([os.path.join(dir_path, f) for f in os.listdir(dir_path)], key=os.path.getctime)
     total_size = sum(os.path.getsize(f) for f in files) / (1024 * 1024)  # Size in MB
-    max_size = 5000  # Max storage size in MB
+    max_size = 20000  # Max storage size in MB
     while total_size > max_size and files:
         os.remove(files.pop(0))
         total_size = sum(os.path.getsize(f) for f in files) / (1024 * 1024)
@@ -31,3 +31,4 @@ while True:
     time.sleep(600)
     picam2.stop_recording()
     manage_storage()
+
