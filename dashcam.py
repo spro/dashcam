@@ -24,7 +24,7 @@ def manage_storage():
 
 while True:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output = f'videos/video_{timestamp}.h264'
+    output = f'/home/map7/code/dashcam/videos/video_{timestamp}.h264'
     print(f"Start Recording to {output}...")
     picam2.start_recording(encoder, output)
 

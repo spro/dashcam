@@ -45,5 +45,5 @@ while True:
         #cmd="kill " + str(proc.pid)
         #print(cmd)
         #os.system(cmd)
-        os.system("pkill -f dashcam")
+        os.system("sudo pkill -f dashcam.py")
         time.sleep(1)
