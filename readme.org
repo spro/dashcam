@@ -9,7 +9,7 @@ https://github.com/map7/dashcam
 - Raspberry PI 4
 - PI Camera V1
 - Sdcard 64GB Sandisk Endurance
-- OnOffshim
+- [[https://shop.pimoroni.com/products/onoff-shim?variant=41102600138][OnOffshim]]
 - 2 x Buttons & LED
 
 ** Usage
