@@ -1,16 +1,16 @@
-* Dashcam
+# Dashcam
 
 Use a Raspberry Pi camera to do loop recording, for a dashcam or security.
 
 Based on https://github.com/map7/dashcam
 
-** Hardware
+## Hardware
 
 - Raspberry PI 4
 - PI Camera V1
 - 2 x Buttons & LED
 
-*** Pin Connections
+### Pin Connections
 
 | Component | Pin |
 |-----------|-----|
@@ -18,7 +18,7 @@ Based on https://github.com/map7/dashcam
 | Shutdown Button | 29 |
 | Status LED | 35 |
 
-** Options
+## Options
 
 ```
 --max-storage 20GB        # Storage limit (20GB, 500MB, etc.)
