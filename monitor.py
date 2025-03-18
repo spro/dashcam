@@ -5,45 +5,53 @@ import time
 import subprocess
 import os
 
-cmd='python3 /home/map7/code/dashcam/dashcam.py'
+# Command to run dashcam script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+cmd = f"python3 {script_dir}/dashcam.py"
 
-GPIO.setwarnings(False) # Ignore warning for now
+# Pin definitions
+RECORD_BUTTON_PIN = 33
+SHUTDOWN_BUTTON_PIN = 29
+STATUS_LED_PIN = 35
 
-GPIO.setmode(GPIO.BCM) # BCM is the GPIO PINS
-GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button Start Recording
-GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Button Shutdown
-GPIO.setup(19, GPIO.OUT)        # LED
+GPIO.setwarnings(False)  # Ignore warning for now
 
-state=0
-proc=""
+GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
+GPIO.setup(
+    RECORD_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP
+)  # Button Start Recording
+GPIO.setup(SHUTDOWN_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button Shutdown
+GPIO.setup(STATUS_LED_PIN, GPIO.OUT)  # LED
+
+state = 0
+proc = ""
 
 while True:
+    shutdown_state = GPIO.input(SHUTDOWN_BUTTON_PIN)
 
-    shutdown_state=GPIO.input(5)
-
-    if (shutdown_state == False):
+    if shutdown_state == False:
         print("SHUTDOWN")
         os.system("sudo shutdown -h now")
         time.sleep(1)
-    
-    input_state=GPIO.input(13)
-    
-    if (state == 0 and input_state == False):
-        print('Button Pressed')
+
+    input_state = GPIO.input(RECORD_BUTTON_PIN)
+
+    if state == 0 and input_state == False:
+        print("Button Pressed")
         print("Starting ", cmd)
         # os.system(cmd)
-        proc = subprocess.Popen(cmd,shell=True)
+        proc = subprocess.Popen(cmd, shell=True)
         print("PID: ", proc.pid)
-        GPIO.output(19, GPIO.HIGH)
+        GPIO.output(STATUS_LED_PIN, GPIO.HIGH)
         state = 1
         time.sleep(1)
-        
-    elif (state == 1 and input_state == False):
-        GPIO.output(19, GPIO.LOW)
+
+    elif state == 1 and input_state == False:
+        GPIO.output(STATUS_LED_PIN, GPIO.LOW)
         state = 0
         print("KILL PID: ", proc.pid)
-        #cmd="kill " + str(proc.pid)
-        #print(cmd)
-        #os.system(cmd)
+        # cmd="kill " + str(proc.pid)
+        # print(cmd)
+        # os.system(cmd)
         os.system("sudo pkill -f dashcam.py")
         time.sleep(1)
